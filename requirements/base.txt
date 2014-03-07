@@ -1,0 +1,8 @@
+Django==1.6.1
+bpython==0.12
+django-braces==1.2.2
+django-model-utils==2.0
+logutils==0.3.3
+South==0.8.1
+django-crispy-forms==1.4.0
+Unipath==1.0
