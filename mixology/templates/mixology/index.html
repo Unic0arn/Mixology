@@ -4,7 +4,11 @@
     </head>
     <body>
         <div class="container">
-            Hej
+            <div class="list-group">
+                {% for drink in drinks %}
+                <span class="list-group-item">{{drink.name}}</span>
+                {% endfor %}
+            </div>
         </div>
     </body>
 </html>
