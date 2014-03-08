@@ -9,6 +9,9 @@ class Ingredient(models.Model):
     unit = models.CharField(max_length=255)
     image = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return self.name
+
 
 class Drink(models.Model):
     name = models.CharField(max_length=255)
@@ -16,6 +19,9 @@ class Drink(models.Model):
     image = models.CharField(max_length=255, blank=True)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Recipe(models.Model):
@@ -27,3 +33,6 @@ class Recipe(models.Model):
 class Tag(models.Model):
     drinkID = models.ForeignKey('Drink')
     name = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.name
