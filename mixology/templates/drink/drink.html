@@ -8,6 +8,21 @@
         <div class="container">
             <h1>{{drink.name}} </h1>
 
+            <p>{{drink.description}}</p>
+            <h2>Ingredients</h2>
+                 <table class="table">
+                {% for r in ingredients %}
+                    <tr>
+                    <td> {{r.ingredient.name}}</td>
+                    <td> {{r.amount}}</td>
+                    <td> {{r.ingredient.unit}}</td>
+                    <td> {{r.note}}</td>
+
+                {% endfor %}
+
+
+                 </table>
+
         </div>
     </body>
 </html>

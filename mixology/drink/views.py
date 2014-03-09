@@ -27,8 +27,9 @@ def search_drinks(request):
 def drink_view(request, drink_id):
     print "here"
     drink = Drink.objects.get(id=drink_id)
-    ingredients = drink.recipe_set.all()
-    return render_to_response("drink/drink.html", {'drink': drink, 'ingredients': ingredients})
+    recipe = drink.recipe_set.all()
+
+    return render_to_response("drink/drink.html", {'drink': drink, 'ingredients': recipe})
 
 
 def init(request):
