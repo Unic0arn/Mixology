@@ -13,6 +13,19 @@
             <h3> Search </h3>
             {% csrf_token %}
             <input type="text" id="search" name="search" class="form-control"/>
+
+            <div id="ingredient-lists" class="col-md-12">
+                <h4> Specify your cabinet <h4>
+                <form class="form" role="form" method="post">
+
+                {% for ingredient in ingredients%}
+                    <label class="checkbox-inline"><input name="ingredients" value="{{ingredient.id}}" type="checkbox"> {{ingredient.name}}</label>
+                {% endfor %}
+                <br>
+                <br>
+                <button type="submit" class="btn btn-default"> Search </button>
+                </form>
+            </div>
             <div id="search-results" class="list-group">
                 {% for drink in drinks %}
                 <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}}</a></span>

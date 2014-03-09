@@ -22,6 +22,24 @@ def search_drinks(request):
     return render_to_response("drink/ajax_search.html", {'drinks': drinks2})
 
 
+def advanced_search(request):
+    if request.method == "POST":
+        cabinet = request.POST.getlist('ingredients')
+        drinks = []
+        if cabinet.length > 0:
+            for i in cabinet:
+                ingredient = Ingredient.objects.get(id=i.value())
+                recipies = ingredient.recipe_set.values_list('id')
+                print recipies
+        return "lol"
+
+    else:
+        args = {}
+        args['ingredients'] = Ingredient.objects.all()
+        args.update(csrf(request))
+        return render_to_response("drink/search.html", args)
+
+
 def drink_view(request, drink_id):
     print "here"
     drink = Drink.objects.get(id=drink_id)
