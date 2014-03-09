@@ -28,6 +28,7 @@ class Recipe(models.Model):
     drink = models.ForeignKey('Drink')
     ingredient = models.ForeignKey('Ingredient')
     amount = models.IntegerField(default=1)
+    note = models.CharField(max_length=255, blank=True)
 
 
 class Tag(models.Model):

@@ -1,0 +1,13 @@
+{% if drinks.count > 0 %}
+{% for drink in drinks %}
+
+<li>{{ drink.name }}</li>
+
+{% endfor %}
+
+{% else %}
+
+
+<li> None to show! </li>
+
+{% endif %}

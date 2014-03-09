@@ -1,6 +1,11 @@
 <html>
     <head>
         {% include "bootstrap.html" %}
+        <title> Mixology </title>
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+        <script src="/static/js/jquery-2.1.0.min.js"></script>
+        <script src="/static/js/ajax.js"></script>
     </head>
     <body>
         <div class="container">
@@ -9,6 +14,15 @@
                 {% for drink in drinks %}
                 <span class="list-group-item">{{drink.name}}</span>
                 {% endfor %}
+            </div>
+            <div>
+
+            <h3> Search </h3>
+            {% csrf_token %}
+            <input type="text" id="search" name="search" />
+            <ul id="search-results">
+
+            </ul>
             </div>
         </div>
     </body>
