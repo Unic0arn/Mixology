@@ -18,20 +18,32 @@ def search_drinks(request):
         search_text = request.POST['search_text']
     else:
         search_text = ''
-    drinks2 = Drink.objects.filter(name__contains=search_text)
+    drinks2 = Drink.objects.filter(name__iexact=search_text)
     return render_to_response("drink/ajax_search.html", {'drinks': drinks2})
 
 
 def advanced_search(request):
     if request.method == "POST":
         cabinet = request.POST.getlist('ingredients')
+        args = {}
+        args.update(csrf(request))
         drinks = []
-        if cabinet.length > 0:
-            for i in cabinet:
-                ingredient = Ingredient.objects.get(id=i.value())
-                recipies = ingredient.recipe_set.values_list('id')
-                print recipies
-        return "lol"
+        args['drinks'] = drinks
+
+        possibledrinks = None
+        for i in cabinet:
+            ingredient = Ingredient.objects.get(id=i.value())
+            if possibledrinks is None:
+                possibledrinks = set(ingredient.recipe_set.values_list('id'))
+            else:
+                list2 = ingredient.recipe_set.values_list('id')
+                possibledrinks.intersection(list2)
+            print possibledrinks
+
+        if possibledrinks is not None:
+            args['drinks'] = list(possibledrinks)
+
+        return render_to_response("drink/advancedsearch.html", args, RequestContext(request))
 
     else:
         args = {}

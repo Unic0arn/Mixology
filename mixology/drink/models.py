@@ -7,7 +7,7 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     unit = models.CharField(max_length=255)
-    image = models.CharField(max_length=255)
+    image = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -31,7 +31,7 @@ class Recipe(models.Model):
     note = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
-        return  str(self.amount) + self.ingredient.unit + " of " + self.ingredient.name + " in " + self.drink.name
+        return  str(self.amount) + " " + self.ingredient.unit + " of " + self.ingredient.name + " in " + self.drink.name
 
 
 class Tag(models.Model):

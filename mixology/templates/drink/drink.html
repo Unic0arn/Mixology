@@ -24,14 +24,12 @@
                      <tr>
                      <th>Ingredient</th>
                      <th>Amount</th>
-                     <th>Unit</th>
                      <th>Comment</th>
                      </tr>
                     {% for r in ingredients %}
                         <tr>
                         <td> {{r.ingredient.name}}</td>
-                        <td> {{r.amount}}</td>
-                        <td> {{r.ingredient.unit}}</td>
+                        <td> {{r.amount}} {{r.ingredient.unit}}</td>
                         <td> {{r.note}}</td>
                         </tr>
                     {% endfor %}
