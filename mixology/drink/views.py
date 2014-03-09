@@ -1,6 +1,6 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from models import Drink
+from models import Drink, Ingredient, Recipe
 from django.core.context_processors import csrf
 
 # Create your views here.
@@ -27,8 +27,23 @@ def search_drinks(request):
     return render_to_response("drink/ajax_search.html", {'drinks': drinks2})
 
 
-
 def init(request):
-    Drink(name='Mojito', description='Yum!').save()
-    Drink(name='Cuba Libre', description='Yuck!').save()
+    drink1 = Drink(name='Mojito', description='Yum!')
+    drink1.save()
+    drink2 = Drink(name='Cuba Libre', description='Yuck!')
+    drink2.save()
+    i1 = Ingredient(name='Juice', description='So svalk', unit='kg')
+    i1.save()
+    i2 = Ingredient(name='Vatten', description='Such wet', unit='doge')
+    i2.save()
+    i3 = Ingredient(name='Vindruvor', description='Many rund', unit='pi')
+    i3.save()
+    i4 = Ingredient(name='Milk', description='Very ko', unit='mil-k')
+    i4.save()
+    Recipe(drink = drink1, ingredient = i1, amount = 20).save()
+    Recipe(drink = drink1,ingredient = i2,amount = 20).save()
+    Recipe(drink = drink1,ingredient = i4,amount = 20,note = "smaskens!").save()
+    Recipe(drink = drink2,ingredient = i2,amount = 20).save()
+    Recipe(drink = drink2,ingredient = i4,amount = 20,note="katt").save()
+
     return main(request)

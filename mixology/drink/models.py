@@ -30,6 +30,8 @@ class Recipe(models.Model):
     amount = models.IntegerField(default=1)
     note = models.CharField(max_length=255, blank=True)
 
+    def __unicode__(self):
+        return  str(self.amount) + self.ingredient.unit + " of " + self.ingredient.name + " in " + self.drink.name
 
 class Tag(models.Model):
     drinkID = models.ForeignKey('Drink')
