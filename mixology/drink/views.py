@@ -19,8 +19,6 @@ def search_drinks(request):
     else:
         search_text = ''
     drinks2 = Drink.objects.filter(name__contains=search_text)
-    args = {}
-    args['drinks'] = drinks2
     return render_to_response("drink/ajax_search.html", {'drinks': drinks2})
 
 

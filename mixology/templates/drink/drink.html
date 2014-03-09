@@ -6,23 +6,39 @@
     </head>
     <body>
         <div class="container">
-            <h1>{{drink.name}} </h1>
 
-            <p>{{drink.description}}</p>
-            <h2>Ingredients</h2>
-                 <table class="table">
-                {% for r in ingredients %}
-                    <tr>
-                    <td> {{r.ingredient.name}}</td>
-                    <td> {{r.amount}}</td>
-                    <td> {{r.ingredient.unit}}</td>
-                    <td> {{r.note}}</td>
+            <div class="col-md-2">
+                {% if drink.image != '' %}
 
-                {% endfor %}
+                <img class="drink-avatar" src="/static/images/{{drink.image}}"/>
+                {% endif %}
+            </div>
+            <div class="col-md-9">
+                <h1>{{drink.name}} </h1>
+
+                <p>{{drink.description}}</p>
+            </div>
+            <div class="col-md-12">
+                <h2>Ingredients</h2>
+                     <table class="table">
+                     <tr>
+                     <th>Ingredient</th>
+                     <th>Amount</th>
+                     <th>Unit</th>
+                     <th>Comment</th>
+                     </tr>
+                    {% for r in ingredients %}
+                        <tr>
+                        <td> {{r.ingredient.name}}</td>
+                        <td> {{r.amount}}</td>
+                        <td> {{r.ingredient.unit}}</td>
+                        <td> {{r.note}}</td>
+                        </tr>
+                    {% endfor %}
 
 
-                 </table>
-
+                     </table>
+            </div>
         </div>
     </body>
 </html>
