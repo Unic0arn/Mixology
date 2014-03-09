@@ -1,7 +1,8 @@
 {% if drinks.count > 0 %}
 {% for drink in drinks %}
 
-<li>{{ drink.name }}</li>
+ <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}}</a></span>
+
 
 {% endfor %}
 

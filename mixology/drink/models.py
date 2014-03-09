@@ -33,6 +33,7 @@ class Recipe(models.Model):
     def __unicode__(self):
         return  str(self.amount) + self.ingredient.unit + " of " + self.ingredient.name + " in " + self.drink.name
 
+
 class Tag(models.Model):
     drinkID = models.ForeignKey('Drink')
     name = models.CharField(max_length=255)

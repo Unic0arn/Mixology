@@ -18,13 +18,17 @@ def search_drinks(request):
         search_text = request.POST['search_text']
     else:
         search_text = ''
-    print search_text
     drinks2 = Drink.objects.filter(name__contains=search_text)
-    print drinks2
-    print "searching"
     args = {}
     args['drinks'] = drinks2
     return render_to_response("drink/ajax_search.html", {'drinks': drinks2})
+
+
+def drink_view(request, drink_id):
+    print "here"
+    drink = Drink.objects.get(id=drink_id)
+    ingredients = drink.recipe_set.all()
+    return render_to_response("drink/drink.html", {'drink': drink, 'ingredients': ingredients})
 
 
 def init(request):
@@ -40,10 +44,10 @@ def init(request):
     i3.save()
     i4 = Ingredient(name='Milk', description='Very ko', unit='mil-k')
     i4.save()
-    Recipe(drink = drink1, ingredient = i1, amount = 20).save()
-    Recipe(drink = drink1,ingredient = i2,amount = 20).save()
-    Recipe(drink = drink1,ingredient = i4,amount = 20,note = "smaskens!").save()
-    Recipe(drink = drink2,ingredient = i2,amount = 20).save()
-    Recipe(drink = drink2,ingredient = i4,amount = 20,note="katt").save()
+    Recipe(drink=drink1, ingredient=i1, amount=20).save()
+    Recipe(drink=drink1, ingredient=i2, amount=20).save()
+    Recipe(drink=drink1, ingredient=i4, amount=20, note="smaskens!").save()
+    Recipe(drink=drink2, ingredient=i2, amount=20).save()
+    Recipe(drink=drink2, ingredient=i4, amount=20, note="katt").save()
 
     return main(request)

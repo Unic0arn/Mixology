@@ -9,20 +9,12 @@
     </head>
     <body>
         <div class="container">
-            <p>List of drinks!</p>
-            <div class="list-group">
-                {% for drink in drinks %}
-                <span class="list-group-item">{{drink.name}}</span>
-                {% endfor %}
-            </div>
-            <div>
 
             <h3> Search </h3>
             {% csrf_token %}
-            <input type="text" id="search" name="search" />
-            <ul id="search-results">
+            <input type="text" id="search" name="search" class="form-control"/>
+            <div id="search-results" class="list-group">
 
-            </ul>
             </div>
         </div>
     </body>
