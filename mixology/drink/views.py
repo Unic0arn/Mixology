@@ -18,7 +18,8 @@ def search_drinks(request):
         search_text = request.POST['search_text']
     else:
         search_text = ''
-    drinks2 = Drink.objects.filter(name__iexact=search_text)
+    drinks2 = Drink.objects.filter(name__icontains=search_text)
+
     return render_to_response("drink/ajax_search.html", {'drinks': drinks2})
 
 
@@ -32,7 +33,7 @@ def advanced_search(request):
 
         possibledrinks = None
         for i in cabinet:
-            ingredient = Ingredient.objects.get(id=i.value())
+            ingredient = Ingredient.objects.get(id=i)
             if possibledrinks is None:
                 possibledrinks = set(ingredient.recipe_set.values_list('id'))
             else:
@@ -43,7 +44,7 @@ def advanced_search(request):
         if possibledrinks is not None:
             args['drinks'] = list(possibledrinks)
 
-        return render_to_response("drink/advancedsearch.html", args, RequestContext(request))
+        return render_to_response("drink/search.html", args, RequestContext(request))
 
     else:
         args = {}
