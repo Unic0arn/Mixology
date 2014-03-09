@@ -31,9 +31,9 @@ def drink_view(request, drink_id):
 
 
 def init(request):
-    drink1 = Drink(name='Mojito', description='Yum!')
+    drink1 = Drink(name='Mojito', description='Yum!', image='mojito.jpg')
     drink1.save()
-    drink2 = Drink(name='Cuba Libre', description='Yuck!')
+    drink2 = Drink(name='Cuba Libre', description='Yuck!', image='cuba.jpg')
     drink2.save()
     i1 = Ingredient(name='Juice', description='So svalk', unit='kg')
     i1.save()
