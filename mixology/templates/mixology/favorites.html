@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Mixology{% endblock %}
+
+
+    {% block head %}
+        <script src="/static/js/ajax.js"></script>
+    {% endblock %}
+    {% block content %}
+        <div class="container">
+            {% if favorites %}
+
+            <div id="search-results" class="list-group col-md-12">
+                <h3> Favorites </h3>
+                {% for fav in favorites %}
+                <span class="list-group-item"><a href="/drink/{{fav.drinkID.id}}"">{{fav.drinkID.name}}</a></span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endblock %}
