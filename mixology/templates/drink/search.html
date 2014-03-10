@@ -12,10 +12,8 @@
     {% block content %}
         <div class="container">
 
-            <h3> Search </h3>
-            <input type="text" id="search" name="search" class="form-control"/>
             <div id="ingredient-lists" class="col-md-12">
-                <h4> Specify your cabinet <h4>
+                <h3> Specify your cabinet </h3>
                 <form id="cabinetSearch" class="form" role="form" method="post">
                 {% csrf_token %}
 
@@ -27,8 +25,9 @@
                 </form>
             </div>
             {% if drinks %}
-            <h3> Results </h3>
-            <div id="search-results" class="list-group">
+
+            <div id="search-results" class="list-group col-md-12">
+                <h3> Results </h3>
                 {% for drink in drinks %}
                 <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}} ({{drink.upvoteperc}}% like it!)</a></span>
                 {% endfor %}

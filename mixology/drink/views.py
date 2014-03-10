@@ -27,6 +27,7 @@ def search_drinks(request):
         print tag.drink
         drinks.add(tag.drink)
 
+#    drinks = drinks.order_by('upvoteperc')
     return render_to_response("drink/ajax_search.html", {'drinks': list(drinks)})
 
 
@@ -75,7 +76,7 @@ def advanced_search(request):
                 drinkids = drinkids & tempdrinkids
             print drinkids
         '''
-        args['drinks'] = Drink.objects.filter(pk__in=drinkList)
+        args['drinks'] = Drink.objects.filter(pk__in=drinkList)  # .order_by('upvoteperc')
         args['ingredients'] = Ingredient.objects.all()
 
         return render_to_response("drink/ajax_search.html", args, RequestContext(request))
@@ -83,7 +84,7 @@ def advanced_search(request):
     else:
         args = {}
         args['ingredients'] = Ingredient.objects.all()
-        args['drinks'] = Drink.objects.all()
+        args['drinks'] = Drink.objects.all()  # order_by('upvoteperc')
         args.update(csrf(request))
         return render_to_response("drink/search.html", args)
 

@@ -2,13 +2,34 @@
 
     }
 
+.navbar{
+    background-color: rgba(197, 55, 180, 0.15)
+    }
 .drink-avatar{
     max-width:100%;
 
 }
+
+#search-results{
+        margin-top: 20px;
+
+    }
 
 .ingredient-checkbox{
         width:200px;
         height: 25px;
         margin-left:10px;
 }
+
+.navbar-nav li{
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+    }
+.navbar-nav  .right{
+        border-left: 1px solid black;
+        border-right: 0;
+    }
+.navbar-nav  .left{
+        border-left: 0;
+        border-right: 1px solid black;
+    }
