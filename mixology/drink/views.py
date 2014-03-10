@@ -26,20 +26,59 @@ def search_drinks(request):
 
 def advanced_search(request):
     if request.method == "POST":
-        #cabinet = request.POST.getlist('ingredients')
+        cabinet = request.POST.getlist('ingredients')
         args = {}
         args.update(csrf(request))
-
+        cabinet = map(int, cabinet)
+        print cabinet
+        ingredientIds = set(cabinet)
+        print ingredientIds
+        drinkids = set(Drink.objects.values_list('id', flat=True))
         #ingredients = Ingredient.objects.filter(id__in=cabinet)
+        print drinkids
+        drinkList = set()
+        for d in drinkids:
+            print d
 
-        args['drinks'] = Drink.objects.all()
+            di = Recipe.objects.filter(drink__id=d)
+            print di
+            diid = set(di.values_list('ingredient__id', flat=True))
+            print diid
+            if diid.issubset(ingredientIds):
+                print "Woho"
+                drinkList.add(d)
+            else:
+                print "Removing"
+
+        print drinkList
+
+
+        '''
+        for i in cabinet:
+            ing = Ingredient.objects.get(id=i)
+            reclist = ing.recipe_set.all()
+            tempdrinkids = set()
+
+            print ing
+            for r in reclist:
+                print r.drink
+                tempdrinkids.add(r.drink.id)
+            print tempdrinkids
+            if len(drinkids) == 0:
+                drinkids = tempdrinkids
+            else:
+                drinkids = drinkids & tempdrinkids
+            print drinkids
+        '''
+        args['drinks'] = Drink.objects.filter(pk__in=drinkList)
         args['ingredients'] = Ingredient.objects.all()
 
-        return render_to_response("drink/search.html", args, RequestContext(request))
+        return render_to_response("drink/ajax_search.html", args, RequestContext(request))
 
     else:
         args = {}
         args['ingredients'] = Ingredient.objects.all()
+        args['drinks'] = Drink.objects.all()
         args.update(csrf(request))
         return render_to_response("drink/search.html", args)
 
@@ -84,6 +123,7 @@ def vote(request, drink_id):
             drink.downvotes -= 1
             drink.upvotes += 1
     drink.save()
+    print "Upvotes: " + str(drink.upvotes) + " \nDownVotes: " + str(drink.downvotes)
     return HttpResponse('')
 
 

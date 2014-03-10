@@ -5,7 +5,7 @@ $(function(){
             console.log("ajax")
             $.ajax({
                 type: "POST",
-                url: "search/",
+                url: "drink/search/",
                 data: {
                     'search_text' : $('#search').val(),
                     'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
@@ -17,7 +17,24 @@ $(function(){
                 dataType: 'html'
             });
         };
+
     });
+    $('#cabinetSearch').submit(function(e){
+
+        console.log("ajax")
+        $.ajax({
+            type: "POST",
+            url: "drink/advancedsearch/",
+            data: $(this).serialize(),
+            success: searchSuccess,
+            error: function(xhr, textStatus, errorThrown){
+                alert(errorThrown);
+            },
+            dataType: 'html'
+        });
+        return false;
+    });
+
 });
 
 function searchSuccess(data, textStatus, jqXHR){
