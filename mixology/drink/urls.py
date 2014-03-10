@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     url(r'^search/', views.search_drinks),
     url(r'^advancedsearch/', views.advanced_search),
     url(r'^init/', views.init),
+    url(r'^(?P<drink_id>\d+)/vote/', views.vote),
     url(r'^(?P<drink_id>\d+)/$', views.drink_view),
     )

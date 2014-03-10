@@ -23,6 +23,20 @@ class Drink(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def upvoteperc(self):
+        ups = self.upvotes
+        downs = self.downvotes
+        upperc = 100
+        if ups + downs != 0:
+            upperc = int((ups / float(ups + downs)) * 100)
+        return upperc
+
+    @property
+    def downvoteperc(self):
+        ups = self.upvoteperc
+        return 100 - ups
+
 
 class Recipe(models.Model):
     drink = models.ForeignKey('Drink')

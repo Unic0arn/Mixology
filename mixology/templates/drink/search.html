@@ -12,25 +12,24 @@
 
             <h3> Search </h3>
             <input type="text" id="search" name="search" class="form-control"/>
-
             <div id="ingredient-lists" class="col-md-12">
                 <h4> Specify your cabinet <h4>
                 <form class="form" role="form" method="post">
-
-            {% csrf_token %}
+                {% csrf_token %}
                 {% for ingredient in ingredients%}
                     <label class="checkbox-inline"><input name="ingredients" value="{{ingredient.id}}" type="checkbox"> {{ingredient.name}}</label>
                 {% endfor %}
-                <br>
-                <br>
                 <button type="submit" class="btn btn-default"> Search </button>
                 </form>
             </div>
+            {% if drinks %}
+            <h3> Results </h3>
             <div id="search-results" class="list-group">
                 {% for drink in drinks %}
-                <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}}</a></span>
+                <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}} ({{drink.upvoteperc}}% like it!)</a></span>
                 {% endfor %}
             </div>
+            {% endif %}
         </div>
     </body>
 </html>

@@ -3,6 +3,7 @@
         {% include "bootstrap.html" %}
         <title> Mixology - {{drink.name}}</title>
         <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+        <script src="/static/js/jquery-2.1.0.min.js"></script>
     </head>
     <body>
         <div class="container">
@@ -18,13 +19,14 @@
 
                 <p>{{drink.description}}</p>
             </div>
+
             <div class="col-md-12">
                 <h2>Ingredients</h2>
                      <table class="table">
                      <tr>
                      <th>Ingredient</th>
                      <th>Amount</th>
-                     <th>Comment</th>
+                     <th></th>
                      </tr>
                     {% for r in ingredients %}
                         <tr>
@@ -33,9 +35,88 @@
                         <td> {{r.note}}</td>
                         </tr>
                     {% endfor %}
+                </table>
 
+                {% csrf_token %}
+                </form>
+                <button class="btn btn-default" id="upvote" onclick="upvote()">Yum! I like it!</button>
+                <button class="btn btn-default" id="downvote" onclick="downvote()">Yuck! I hate it!</button>
 
-                     </table>
+                <div class= "progress">
+                    <div class="progress-bar progress-bar-success" style="width: {{drink.upvoteperc}}%"></div>
+                    <div class="progress-bar progress-bar-danger" style="width: {{drink.downvoteperc}}%"></div>
+                </div>
+
+                <script type="text/javascript">
+                    var vote = 0;
+                    function upvote(){
+                        var newvote = 0;
+                        if(vote != 1) {
+                            newvote = 1;
+                            var btn = document.getElementById("upvote");
+                            btn.className = "btn btn-success";
+                            var dbtn = document.getElementById("downvote");
+                            dbtn.className = "btn btn-default";
+                        } else {
+                            newvote = 0;
+                            var btn = document.getElementById("upvote");
+                            btn.className = "btn btn-default";
+                            var dbtn = document.getElementById("downvote");
+                            dbtn.className = "btn btn-default";
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            url: "vote/",
+                            data: {
+                                'oldvote' : vote,
+                                'newvote' : newvote,
+                                'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+                                },
+                            error: function(xhr, textStatus, errorThrown){
+                                alert(errorThrown);
+                            },
+                            dataType: 'html'
+                        });
+
+                        vote = newvote;
+                    }
+
+                    function downvote() {
+                        var newvote = 0;
+                        if(vote != -1) {
+                            newvote = -1;
+                            var btn = document.getElementById("upvote");
+                            btn.className = "btn btn-default";
+                            var dbtn = document.getElementById("downvote");
+                            dbtn.className = "btn btn-danger";
+                        } else {
+                            newvote = 0;
+                            var btn = document.getElementById("upvote");
+                            btn.className = "btn btn-default";
+                            var dbtn = document.getElementById("downvote");
+                            dbtn.className = "btn btn-default";
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            url: "vote/",
+                            data: {
+                                'oldvote' : vote,
+                                'newvote' : newvote,
+                                'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+                                },
+                            error: function(xhr, textStatus, errorThrown){
+                                console.log(xhr);
+                                alert(errorThrown);
+                            },
+                            dataType: 'html'
+                        });
+
+                        vote = newvote;
+                    }
+
+                </script>
             </div>
         </div>
     </body>

@@ -1,5 +1,6 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
 from models import Drink, Ingredient, Recipe
 from django.core.context_processors import csrf
 
@@ -25,24 +26,14 @@ def search_drinks(request):
 
 def advanced_search(request):
     if request.method == "POST":
-        cabinet = request.POST.getlist('ingredients')
+        #cabinet = request.POST.getlist('ingredients')
         args = {}
         args.update(csrf(request))
-        drinks = []
-        args['drinks'] = drinks
 
-        possibledrinks = None
-        for i in cabinet:
-            ingredient = Ingredient.objects.get(id=i)
-            if possibledrinks is None:
-                possibledrinks = set(ingredient.recipe_set.values_list('id'))
-            else:
-                list2 = ingredient.recipe_set.values_list('id')
-                possibledrinks.intersection(list2)
-            print possibledrinks
+        #ingredients = Ingredient.objects.filter(id__in=cabinet)
 
-        if possibledrinks is not None:
-            args['drinks'] = list(possibledrinks)
+        args['drinks'] = Drink.objects.all()
+        args['ingredients'] = Ingredient.objects.all()
 
         return render_to_response("drink/search.html", args, RequestContext(request))
 
@@ -54,11 +45,46 @@ def advanced_search(request):
 
 
 def drink_view(request, drink_id):
-    print "here"
     drink = Drink.objects.get(id=drink_id)
     recipe = drink.recipe_set.all()
 
-    return render_to_response("drink/drink.html", {'drink': drink, 'ingredients': recipe})
+    args = {}
+    args['drink'] = drink
+    args['ingredients'] = recipe
+
+    return render_to_response("drink/drink.html", args, RequestContext(request))
+
+
+def vote(request, drink_id):
+    oldvote = int(request.POST['oldvote'])
+    newvote = int(request.POST['newvote'])
+    drink = Drink.objects.get(id=drink_id)
+
+    if oldvote == 0:
+        if newvote == 1:
+            #single upvote
+            drink.upvotes += 1
+        elif newvote == -1:
+            #single downvote
+            drink.downvotes += 1
+    elif oldvote == 1:
+        if newvote == 0:
+            #remove upvote
+            drink.upvotes -= 1
+        elif newvote == -1:
+            #remove upvote and add downvote
+            drink.upvotes -= 1
+            drink.downvotes += 1
+    elif oldvote == -1:
+        if newvote == 0:
+            #remove downvote
+            drink.downvotes -= 1
+        elif newvote == 1:
+            #remove downvote and add upvote
+            drink.downvotes -= 1
+            drink.upvotes += 1
+    drink.save()
+    return HttpResponse('')
 
 
 def init(request):
