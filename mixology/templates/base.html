@@ -2,10 +2,13 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.0/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <script src="/static/js/jquery-2.1.0.min.js"></script>
     {% block head %}
     {% endblock %}
-    {% include "bootstrap.html" %}
 </head>
 <body style="padding-top: 20px; padding-bottom: 20px;">
 <div class="container">

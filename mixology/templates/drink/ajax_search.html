@@ -1,8 +1,6 @@
 {% if drinks.count > 0 %}
 {% for drink in drinks %}
-
- <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}}</a></span>
-
+<span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}} ({{drink.upvoteperc}}% like it!)</a></span>
 
 {% endfor %}
 

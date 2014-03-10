@@ -1,11 +1,8 @@
-<html>
-    <head>
-        {% include "bootstrap.html" %}
-        <title> Mixology - {{drink.name}}</title>
-        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-        <script src="/static/js/jquery-2.1.0.min.js"></script>
-    </head>
-    <body>
+{% extends "base.html" %}
+
+{% block title %}Mixology{% endblock %}
+
+{% block content %}
         <div class="container">
 
             <div class="col-md-2">
@@ -118,6 +115,4 @@
 
                 </script>
             </div>
-        </div>
-    </body>
-</html>
+{% endblock %}
