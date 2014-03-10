@@ -41,7 +41,8 @@ DEFAULT_APPS = (
 THIRD_PARTY_APPS = ()
 
 LOCAL_APPS = (
-    'drink',)
+    'drink',
+    'login')
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 

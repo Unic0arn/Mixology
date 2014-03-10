@@ -1,6 +1,6 @@
 from django.db import models
-from drink import Ingredient, Drink
-from django.contrib.auth import User
+from drink.models import Ingredient, Drink
+from django.contrib.auth.models import User
 # Create your models here.
 
 

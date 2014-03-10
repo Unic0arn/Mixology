@@ -22,8 +22,15 @@
                 <ul class="nav navbar-nav">
                     <li class="left"><a href="{% url 'main'%}">Main</a></li>
                     <li class="right"><a href="{% url 'search'%}">Cabinet search</a></li>
+
                 </ul>
                 <div class="nav navbar-right">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'drink:favorites' %}">Favorites</a></li>
+                        <li class="right">{{user.name}}</li>
+                    {% else %}
+                        <li class="right"><a href="{% url 'login'%}">Login</a></li>
+                    {% endif %}
                     {% block extra_btn %}
                     {% endblock %}
             </div>

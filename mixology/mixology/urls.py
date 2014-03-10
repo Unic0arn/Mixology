@@ -11,6 +11,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^drink/', include('drink.urls', namespace='drink')),
+    url(r'^login/', 'django.contrib.auth.views.login', {'template_name': 'mixology/login.html'},name="login"),
     url(r'^$', drink.views.main, name='main'),
     url(r'^search/', drink.views.advanced_search, name='search')
 )

@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block title %}Mixology{% endblock %}
-
+ {% block head %}
+        <script src="/static/js/ajax.js"></script>
+    {% endblock %}
 {% block content %}
         <div class="container">
 
@@ -16,12 +18,19 @@
 
                 <p>{{drink.description}}</p>
 
+                <div id="tags">
+                <h4>Tags: </h4>
 
+                  <span id="tag-list">
                 {% if tags %}
 
-                  <h4>Tags: </h4>
+
                   {{ tags|join:", "}}
+
                 {% endif %}
+</span>
+                <input type="text" id="add-tag" class="form-control">
+                </div>
             </div>
 
             <div class="col-md-12">
@@ -50,9 +59,39 @@
                     <div class="progress-bar progress-bar-success" style="width: {{drink.upvoteperc}}%"></div>
                     <div class="progress-bar progress-bar-danger" style="width: {{drink.downvoteperc}}%"></div>
                 </div>
-
+                {% if user.is_authenticated %}
+                <button class="btn btn-default" id="favorite" onclick="favorite()">Favorite this drink</button>
+                <button class="btn btn-default" id="unfavorite" onclick="unfavorite()">Unfavorite</button>
+                {% endif %}
                 <script type="text/javascript">
                     var vote = 0;
+
+                    function favorite(){
+                        $.ajax({
+                            type: "POST",
+                            url: "addfav/",
+                            data: {
+                                'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+                                },
+                            error: function(xhr, textStatus, errorThrown){
+                                alert(errorThrown);
+                            },
+                            dataType: 'html'
+                        });
+                    }
+                    function unfavorite(){
+                        $.ajax({
+                            type: "POST",
+                            url: "removefav/",
+                            data: {
+                                'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+                                },
+                            error: function(xhr, textStatus, errorThrown){
+                                alert(errorThrown);
+                            },
+                            dataType: 'html'
+                        });
+                    }
                     function upvote(){
                         var newvote = 0;
                         if(vote != 1) {

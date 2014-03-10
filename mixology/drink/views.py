@@ -2,6 +2,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from models import Drink, Ingredient, Recipe, Tag
+from login.models import UserFavorite
 from django.core.context_processors import csrf
 
 # Create your views here.
@@ -12,6 +13,37 @@ def main(request):
     args['drinks'] = Drink.objects.all()
     args.update(csrf(request))
     return render_to_response("mixology/index.html", args, RequestContext(request))
+
+def favorites(request):
+    user = request.user
+    favorites = user.userfavorite_set.all().prefetch_related()
+    args = {}
+    args['favorites'] = favorites
+
+    args.update(csrf(request))
+    return render_to_response("mixology/favorites.html",args, RequestContext(request))
+
+def remove_favorite(request, drink_id):
+    print "lol2"
+    user = request.user
+    print user
+    drink = Drink.objects.get(pk=drink_id)
+    print drink
+    fav, created = UserFavorite.objects.get_or_create(drinkID=drink,userID=user)
+    print fav
+    fav.delete()
+    print "deleted"
+    return HttpResponse('')
+
+def add_favorite(request, drink_id):
+    print "lol"
+    user = request.user
+    print user
+    drink = Drink.objects.get(pk=drink_id)
+    print drink
+    fav, created = UserFavorite.objects.get_or_create(drinkID=drink,userID=user)
+    print fav
+    return HttpResponse('')
 
 
 def search_drinks(request):
@@ -28,7 +60,21 @@ def search_drinks(request):
         drinks.add(tag.drink)
 
 #    drinks = drinks.order_by('upvoteperc')
-    return render_to_response("drink/ajax_search.html", {'drinks': list(drinks)})
+    return render_to_response("drink/ajax_search.html", {'drinks': list(drinks)}, RequestContext(request))
+
+
+def add_tag(request, drink_id):
+    drink = Drink.objects.get(pk=drink_id)
+    print drink
+    tag, created = Tag.objects.get_or_create(name=request.POST['tag'], drink=drink)
+    tag.save()
+    print tag
+    tags = drink.tag_set.all()
+    print tags
+    args = {}
+    args.update(csrf(request))
+    args['tags'] = tags
+    return render_to_response("drink/tag_list.html", args, RequestContext(request))
 
 
 def advanced_search(request):
