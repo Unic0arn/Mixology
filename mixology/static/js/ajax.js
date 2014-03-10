@@ -2,7 +2,7 @@ $(function(){
 
     $('#search').keydown(function (e){
         if(e.keyCode == 13){
-            console.log("ajax")
+            console.log("ajax_enter")
             $.ajax({
                 type: "POST",
                 url: "drink/search/",
@@ -21,7 +21,7 @@ $(function(){
     });
     $('#cabinetSearch').submit(function(e){
 
-        console.log("ajax")
+        console.log("ajax_submit")
         $.ajax({
             type: "POST",
             url: "drink/advancedsearch/",

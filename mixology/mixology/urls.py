@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from mixology import views
+import drink
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -10,5 +11,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^drink/', include('drink.urls', namespace='drink')),
-    url(r'^$', views.main, name='main')
+    url(r'^$', drink.views.main, name='main'),
+    url(r'^search/', drink.views.advanced_search, name='search')
 )

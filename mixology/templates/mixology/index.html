@@ -14,9 +14,9 @@
     {% csrf_token %}
     <input type="text" id="search" name="search" class="form-control"/>
     <div id="search-results" class="list-group">
-        {% for drink in drinks %}
-        <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}}</a></span>
-        {% endfor %}
+         {% for drink in drinks %}
+                <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}} ({{drink.upvoteperc}}% like it!)</a></span>
+                {% endfor %}
     </div>
 </div>
 {% endblock %}

@@ -18,9 +18,11 @@
                 <h4> Specify your cabinet <h4>
                 <form id="cabinetSearch" class="form" role="form" method="post">
                 {% csrf_token %}
+
                 {% for ingredient in ingredients%}
-                    <label class="checkbox-inline"><input name="ingredients" value="{{ingredient.id}}" type="checkbox"> {{ingredient.name}}</label>
-                {% endfor %}
+                    <label class="checkbox-inline ingredient-checkbox"><input name="ingredients" value="{{ingredient.id}}" type="checkbox"> {{ingredient.name}}</label>
+
+                {% endfor %}<br>
                 <button type="submit" class="btn btn-default" > Search </button>
                 </form>
             </div>

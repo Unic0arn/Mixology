@@ -6,3 +6,9 @@
     max-width:100%;
 
 }
+
+.ingredient-checkbox{
+        width:200px;
+        height: 25px;
+        margin-left:10px;
+}
