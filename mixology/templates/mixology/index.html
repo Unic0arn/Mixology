@@ -1,23 +1,20 @@
-<html>
-    <head>
-        {% include "bootstrap.html" %}
-        <title> Mixology </title>
-        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
-        <script src="/static/js/jquery-2.1.0.min.js"></script>
-        <script src="/static/js/ajax.js"></script>
-    </head>
-    <body>
-        <div class="container">
 
-            <h3> Search </h3>
-            {% csrf_token %}
-            <input type="text" id="search" name="search" class="form-control"/>
-            <div id="search-results" class="list-group">
-                {% for drink in drinks %}
-                <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}}</a></span>
-                {% endfor %}
-            </div>
-        </div>
-    </body>
-</html>
+
+{% extends "base.html" %}
+
+{% block title %}Mixology{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h3> Search </h3>
+    {% csrf_token %}
+    <input type="text" id="search" name="search" class="form-control"/>
+    <div id="search-results" class="list-group">
+        {% for drink in drinks %}
+        <span class="list-group-item"><a href="/drink/{{drink.id}}"">{{drink.name}}</a></span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
