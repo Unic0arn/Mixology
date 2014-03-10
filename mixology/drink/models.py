@@ -49,7 +49,7 @@ class Recipe(models.Model):
 
 
 class Tag(models.Model):
-    drinkID = models.ForeignKey('Drink')
+    drink = models.ForeignKey('Drink')
     name = models.CharField(max_length=255)
 
     def __unicode__(self):

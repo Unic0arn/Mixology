@@ -1,7 +1,7 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from models import Drink, Ingredient, Recipe
+from models import Drink, Ingredient, Recipe, Tag
 from django.core.context_processors import csrf
 
 # Create your views here.
@@ -19,9 +19,15 @@ def search_drinks(request):
         search_text = request.POST['search_text']
     else:
         search_text = ''
-    drinks2 = Drink.objects.filter(name__icontains=search_text)
+    drinks = set(Drink.objects.filter(name__icontains=search_text))
 
-    return render_to_response("drink/ajax_search.html", {'drinks': drinks2})
+    tag_drinks = set(Tag.objects.filter(name__iexact=search_text).prefetch_related('drink'))
+    print tag_drinks
+    for tag in tag_drinks:
+        print tag.drink
+        drinks.add(tag.drink)
+
+    return render_to_response("drink/ajax_search.html", {'drinks': list(drinks)})
 
 
 def advanced_search(request):
@@ -51,7 +57,6 @@ def advanced_search(request):
                 print "Removing"
 
         print drinkList
-
 
         '''
         for i in cabinet:
@@ -86,8 +91,10 @@ def advanced_search(request):
 def drink_view(request, drink_id):
     drink = Drink.objects.get(id=drink_id)
     recipe = drink.recipe_set.all()
+    tags = drink.tag_set.all()
 
     args = {}
+    args['tags'] = tags
     args['drink'] = drink
     args['ingredients'] = recipe
 
